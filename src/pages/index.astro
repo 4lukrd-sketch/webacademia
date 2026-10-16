@@ -1,0 +1,688 @@
+---
+import { latestPosts, convocatorias } from '../lib/wp';
+import { razones, requisitos, stats, comunes, comunes2, tarifas, requisitosOposicion, pruebas, municipios, resenasGoogle } from '../data/content';
+const [posts, convs] = await Promise.all([latestPosts(), convocatorias()]);
+const W = 'https://www.isfes.es';
+const titulo = 'Tu Academia de Oposiciones a Policía Local de Zaragoza y Aragón';
+const desc = 'Cumple tu sueño de ser Policía Local. En Academia ISFES te explicamos como conseguirlo y te ayudamos en todo el proceso.';
+const plazas = 'https://www.zaragoza.es/oferta/ofertaDetalle.jsp?id=1703';
+const YT_CLASES = 'PTco3JqwEyw';
+const YT_SHORT = '49oeoVfNyUA';
+const HERO = `${W}/wp-content/uploads/2021/02/banner-academia-2021.jpg`;
+const num = (t: string) => { const m = t.match(/(\d+)%/); return m ? +m[1] / 100 : null; };
+const nav = [['formacion','Formación'],['requisitos','Requisitos'],['resultados','Resultados'],['tarifas','Tarifas'],['convocatorias','Convocatorias'],['contacto','Contacto']];
+const mainLinks = [['Inicio','/'],['Quiénes somos','/sobre-nosotros/'],['Cursos online','/cursos-online/'],['Tienda','/tienda-isfes/'],['Eventos','/eventos-isfes/'],['Contacto','/contacto/']];
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{titulo}</title>
+  <meta name="description" content={desc} />
+  <link rel="canonical" href="https://www.isfes.es/academia-policia-local/" />
+  <meta property="og:title" content={titulo} /><meta property="og:description" content={desc} /><meta property="og:image" content={HERO} />
+  <meta name="theme-color" content="#fbfbfd" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" href={`${W}/wp-content/uploads/2024/02/cropped-favicon-isfes-300x300.jpg`} />
+
+  <!-- Preconnect y preload de fuentes críticas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Preload de imagen crítica del Hero (LCP) -->
+  <link rel="preload" as="image" href={HERO} fetchpriority="high" />
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<!-- Menú Global con soporte Responsive Accesible -->
+<header class="gnav" id="gnav">
+  <div class="gnav-in">
+    <a href={W} class="brand" aria-label="ISFES, inicio">
+      <img src={`${W}/wp-content/uploads/2022/10/logo-isfes-es-22-sf.png`} alt="ISFES" width="108" height="30" />
+    </a>
+    
+    <nav class="gnav-desk" aria-label="Principal escritorio">
+      {mainLinks.map(([t,p]) => <a href={W+p}>{t}</a>)}
+      <a href="https://aula.isfes.es/" class="gnav-aula">Aula virtual</a>
+    </nav>
+
+    <div class="gnav-actions">
+      <a href="https://aula.isfes.es/" class="btn sm gnav-mob-aula">Aula virtual</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-drawer">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer móvil -->
+<div class="drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <div class="drawer-content">
+    <div class="drawer-top">
+      <span class="drawer-t">Menú ISFES</span>
+      <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      {mainLinks.map(([t,p]) => <a href={W+p}>{t}</a>)}
+      <a href="https://aula.isfes.es/" class="drawer-highlight">Aula virtual ISFES</a>
+    </nav>
+    <div class="drawer-footer">
+      <a class="btn" style="width:100%;justify-content:center;" href={`${W}/academia-policia-local/inscripcion/`}>Inscripción 2026</a>
+    </div>
+  </div>
+</div>
+
+<!-- Subnav flotante -->
+<div class="snav" id="snav" aria-label="En esta página"><div class="snav-in">
+  <span class="snav-t">Academia Policía Local</span>
+  <div class="snav-l">{nav.map(([id,t]) => <a href={`#${id}`} data-spy={id}>{t}</a>)}</div>
+  <a class="btn sm" href={`${W}/academia-policia-local/inscripcion/`}>Inscríbete</a>
+</div></div>
+
+<main id="main">
+<section class="hero">
+  <a class="live rise" style="--d:0s" href={plazas}><i aria-hidden="true"></i>Más de 40 plazas convocadas en 2026 para Zaragoza<b aria-hidden="true">›</b></a>
+  <h1 class="rise" style="--d:.08s">Academia de Oposiciones a Policía Local de Zaragoza y Aragón. <span>Temario actualizado, tests y clases online.</span></h1>
+  <p class="rise cta-row" style="--d:.18s"><a class="btn" href="#contacto">Contáctanos</a><a class="tl" href="#tarifas">Ver tarifas</a></p>
+  <figure class="photo rise" style="--d:.28s">
+    <img src={HERO} alt="Alumnos y preparación en Academia ISFES" fetchpriority="high" width="1080" height="462" />
+    <img class="plogo" src={`${W}/wp-content/uploads/2021/03/Nuevo-logo-academia5-BLANCO-768x380.png`} alt="ISFES Academia de Policía Local en Zaragoza y Aragón" width="200" height="99" />
+    <figcaption>“En ISFES te ayudamos hasta conseguir tu sueño de ser Policía Local”</figcaption>
+  </figure>
+</section>
+
+<section class="sec" aria-labelledby="t-quieres">
+  <div class="wrap">
+    <p class="statement" id="t-quieres">¿Quieres ser Policía Local? <span>En academia ISFES te preparamos para superar con garantías todas las pruebas de la oposición.</span></p>
+    <div class="cols2 body-l">
+      <p>Prepárate con garantías de éxito y en un buen ambiente de opositores en una de las mejores academias de Policía Local de Aragón. Somos un equipo de Policías Locales, Mandos de Policía, Policía Nacional y personal experto en psicología y RR.HH que llevamos varios años preparando con garantías a opositores en Aragón.</p>
+      <p>En la <b>Academia de Policía Local ISFES</b> puedes formarte de manera <b>online</b> y <b>presencial</b> TODAS las pruebas de la oposición con el único objetivo de conseguir tu plaza en la próxima convocatoria.</p>
+    </div>
+    <p class="flags">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Bandera_de_Zaragoza.svg" alt="Bandera de Zaragoza" width="180" height="120" loading="lazy" decoding="async" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Bandera_de_Arag%C3%B3n.svg" alt="Bandera de Aragón" width="180" height="120" loading="lazy" decoding="async" />
+    </p>
+  </div>
+</section>
+
+<section class="sec tint" id="formacion">
+  <div class="wrap">
+    <h2>¿Por qué elegir ISFES? <span>¿Cómo es nuestra formación?</span></h2>
+    <ul class="why">{razones.map(r => <li><img src={r.img} alt="" width="34" height="34" loading="lazy" decoding="async" /><span>{r.text}</span></li>)}</ul>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap bento">
+    <!-- Tile con Lazy YouTube Facade (Ahorra ~1.2MB de JS no solicitado) -->
+    <div class="tile zoom">
+      <h3>Todas las clases, en directo y grabadas.</h3>
+      <p>Nuestro curso con <b>todas las clases en directo</b> a través de ZOOM y grabadas para visualizarlas en nuestra aula online.</p>
+      <div class="yt-facade" data-id={YT_CLASES} data-title="Clases online de academia ISFES" style="margin-top:auto;width:100%;aspect-ratio:16/9;">
+        <img src={`https://img.youtube.com/vi/${YT_CLASES}/hqdefault.jpg`} alt="Vista previa clases ISFES" loading="lazy" decoding="async" />
+        <button type="button" class="yt-btn" aria-label="Reproducir vídeo de presentación de clases">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tile Bot Telegram con Facade para Short -->
+    <div class="tile test">
+      <img class="tgi" src="https://cdn-icons-png.flaticon.com/512/408/408737.png" alt="Telegram" width="76" height="76" loading="lazy" decoding="async" />
+      <h3>Un bot de Telegram con miles de preguntas.</h3>
+      <div class="tg-in">
+        <div>
+          <p>Prueba nuestro <b>bot de Telegram con miles de preguntas</b> de alta dificultad del temario. Además más de 700 preguntas de convocatorias anteriores y ascensos.</p>
+          <p class="cta-row"><a class="btn" href="https://t.me/testoposicion_bot" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 3.6 2.7 11c-1.3.5-1.3 1.3-.2 1.6l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.2c.3-1.3-.5-1.9-1.5-1.5Zm-3.4 3.5-8.6 7.8-.3 3.4-1.7-5.2 10.6-6.4c.5-.3.9-.1.5.2Z"/></svg>Test gratuitos</a></p>
+        </div>
+        <div class="yt-facade short" data-id={YT_SHORT} data-title="Bot de preguntas ISFES">
+          <img src={`https://img.youtube.com/vi/${YT_SHORT}/hqdefault.jpg`} alt="Vista previa bot de preguntas" loading="lazy" decoding="async" />
+          <button type="button" class="yt-btn" aria-label="Reproducir Short de demostración">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile qtile">
+      <div>
+        <h3>Practica el test antes del examen.</h3>
+        <p>Así es una pregunta del examen: 3 respuestas alternativas y solo una correcta. Pruébalo ahora mismo.</p>
+      </div>
+      <div class="quiz" id="quiz">
+        <p class="q-meta">Pregunta de ejemplo · Constitución Española</p>
+        <p class="q" id="q-text">¿Cuál es el plazo máximo de la detención preventiva?</p>
+        <div class="opts" role="group" aria-labelledby="q-text">
+          <button type="button" data-ok="0"><i>A</i>24 horas</button>
+          <button type="button" data-ok="0"><i>B</i>48 horas</button>
+          <button type="button" data-ok="1"><i>C</i>72 horas</button>
+        </div>
+        <div class="why-q" aria-live="polite"><div><p id="q-res"></p><button type="button" class="tl" id="q-again">Probar otra vez</button></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Reseñas Certificadas de Google -->
+<section class="sec tint" id="testimonios" aria-labelledby="t-opiniones">
+  <div class="wrap">
+    <div class="reviews-header">
+      <div>
+        <h2 id="t-opiniones">Testimonios de nuestr@s alumn@s certificados en Google.</h2>
+        <p class="body-l" style="margin-top:.5rem;">Opiniones reales de opositores que han preparado su plaza con ISFES.</p>
+      </div>
+      <a class="btn sm" href="https://www.google.com/maps/place/Academia+Oposiciones+Polic%C3%ADa+Local+ISFES/@41.6467466,-0.8962256,17z/data=!3m1!4b1!4m6!3m5!1s0xd5915ff5524752b:0x3c2778c5cd9c77c7!8m2!3d41.6467466!4d-0.8962256!16s%2Fg%2F11t47lvmfg" target="_blank" rel="noopener">Ver ficha en Google Maps</a>
+    </div>
+
+    <!-- Contenedor del widget de Elfsight con carga perezosa -->
+    <div class="elfsight-container" id="elfsight-wrapper">
+      <div class="elfsight-app-de903cba-43ea-4e1d-be78-16d37dcc48ca" data-elfsight-app-lazy></div>
+      
+      <!-- Skeleton mientras carga para evitar saltos de pantalla (CLS = 0) -->
+      <div class="widget-skeleton" id="widget-skeleton">
+        <div class="skeleton-pulse"></div>
+        <p>Cargando opiniones verificadas de Google...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="requisitos">
+  <div class="wrap narrow">
+    <h2>Requisitos para ser Policía Local.</h2>
+    <dl class="specs">{requisitos.map(([t,d]) => <div><dt>{t}</dt><dd>{d}</dd></div>)}</dl>
+  </div>
+</section>
+
+<section class="sec tint tabs" id="resultados">
+  <div class="wrap narrow">
+    <h2>Estadísticas de aprobados.</h2>
+    <div class="seg" role="tablist" aria-label="Año">{stats.map(([y], i) => <button role="tab" type="button" aria-selected={i === stats.length - 1} data-t={y}>{y}</button>)}<span class="thumb" aria-hidden="true"></span></div>
+    {stats.map(([y, ps], i) => <div class="tp" role="tabpanel" data-p={y} hidden={i !== stats.length - 1}>{ps.map(t => (
+      <div class="stat"><p set:html={t} />{num(t) !== null && <div class="meter" style={`--v:${num(t)}`} role="img" aria-label={`${Math.round(num(t)! * 100)} por ciento`}><span></span></div>}</div>))}</div>)}
+  </div>
+</section>
+
+<section class="sec" id="tarifas">
+  <div class="wrap">
+    <h2>Tarifas y servicios actuales.</h2>
+    <div class="plans">{tarifas.map((t, i) => (
+      <article class={'plan' + (i === 0 ? ' rec' : '')}>
+        <h3>{t.nombre}{i === 0 && <em>Recomendado</em>}</h3>
+        <p class="price">{t.precio} €<small>/mes</small></p>
+        <p class="pl">{t.clases}</p>
+        <a class="tl" href="#contacto">Preguntar por este plan</a>
+      </article>))}</div>
+    <h3 class="incl-t">Incluido en todos los planes</h3>
+    <ul class="incl">{[...comunes, ...comunes2].map(c => <li>{c}</li>)}</ul>
+  </div>
+</section>
+
+<section class="sec tint" id="contacto">
+  <div class="wrap">
+    <h2>Contáctanos. <span>Infórmate sin compromiso y recibe acceso a uno de nuestros módulos online GRATIS.</span></h2>
+    <div class="contact">
+      <div>
+        <ul class="ways">
+          <li><a href="https://wa.me/message/BCLK4RF5372OK1" target="_blank" rel="noopener"><i class="dot g" aria-hidden="true"></i><span><b>WhatsApp</b>Escríbenos directamente por WhatsApp.</span></a></li>
+          <li><a href="tel:+34644555510"><i class="dot" aria-hidden="true"></i><span><b>Teléfono</b>Rubén (coordinador) - 644 55 55 10</span></a></li>
+          <li><a href="mailto:academia@isfes.es"><i class="dot" aria-hidden="true"></i><span><b>Correo electrónico</b>academia@isfes.es</span></a></li>
+        </ul>
+        <p class="note">Rellena nuestro formulario de inscripción online sin ningún tipo de compromiso.</p>
+        <p class="cta-row"><a class="btn" href={`${W}/academia-policia-local/inscripcion/`}>Inscripción</a></p>
+      </div>
+      <div>
+        <iframe class="map" title="Mapa de la academia" loading="lazy" src="https://maps.google.com/maps?q=Academia%20Polic%C3%ADa%20Local%20Zaragoza%20ISFES&t=m&z=15&output=embed&iwloc=near"></iframe>
+        <h3 class="where">¿Dónde estamos?</h3>
+        <p class="note">Nuestras aulas se encuentran situadas en el centro de estudios CID, sito en Av. Valencia 28, 50005, Zaragoza</p>
+        <a href="https://www.centroestudioscid.es/" target="_blank" rel="noopener">
+          <img src={`${W}/wp-content/uploads/2024/12/logo-cid-300x105.png`} alt="CID Centro de estudios" width="150" height="52" loading="lazy" decoding="async" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="convocatorias">
+  <div class="wrap narrow">
+    <h2>Oposición a Policía Local; convocatorias, temario, requisitos. <span>Toda la información sobre las oposiciones en Zaragoza y Aragón.</span></h2>
+    <p class="lede"><a class="tl" href={plazas}>Más de 40 plazas convocadas en 2026 para Zaragoza (Libres y movilidad)</a></p>
+    <p class="cta-row"><a class="btn" href="https://www.zaragoza.es/oferta/verHTMLOferta.jsp?id=1703&tipo=bases" target="_blank" rel="noopener">Ver bases oposición 2026</a><a class="tl" href={`${W}/hacer-examen-test-policia-local-2026`}>Hacer el último examen de oposición (2026)</a></p>
+    <div class="acc">
+      <details><summary>Requisitos detallados</summary><div class="acc-b"><ul>{requisitosOposicion.map(([t,d]) => <li><b>{t}</b>: {d}</li>)}</ul>
+        <p class="note">Todos los requisitos deberán poseerse el día que finalice el plazo de presentación de solicitudes y mantenerse en la toma de posesión, excepto el permiso de conducir, que deberá poseerse cuando se haga pública la relación de aspirantes que hayan superado el curso de formación.</p>
+        <a class="tl" href={`${W}/requisitos-policia-local-zaragoza/`}>Requisitos detallados</a></div></details>
+      <details><summary>Temario detallado</summary><div class="acc-b"><p>Listado de los 50 temas de la oposición.</p><a class="tl" href={`${W}/temas-oposicion-policia-local-zaragoza/`}>Ver temario completo</a></div></details>
+      <details open><summary>¿Qué pruebas debo superar?</summary><div class="acc-b">{pruebas.map(([t,d]) => <p><b>{t}</b><br />{d}</p>)}<a class="tl" href={`${W}/exclusiones-medicas-policia-local-zaragoza/`}>Ver las exclusiones médicas de la oposición</a></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap narrow">
+    <h2>Convocatorias de plazas en otros municipios.</h2>
+    <p class="body-l">Aquí tienes un listado de las diferentes convocatorias de plazas en Zaragoza y municipios cercanos. En <a class="tl" href={`${W}/blog/`}>nuestro blog</a> también puedes ver la evolución de las <a class="tl" href={`${W}/oposiciones-a-policia-local-desde-2006/`}>convocatorias de plazas para policía local en Zaragoza</a>.</p>
+    <label class="find"><span>Buscar municipio</span><input id="find" type="search" placeholder="Huesca, Caspe, Jaca…" autocomplete="off" /></label>
+    <div class="tbl"><table><thead><tr><th>Municipio</th><th>Instancias</th><th>Nº plazas</th><th>Bases</th></tr></thead>
+      <tbody id="rows">{municipios.map(([m,i,n,u,info]) => <tr><td>{m}{info && <> <a class="tl" href={info}>+Info</a></>}</td><td>{i}</td><td>{n}</td><td><a class="tl" href={u}>Bases</a></td></tr>)}</tbody></table>
+      <p class="empty" id="empty" hidden>Ningún municipio coincide. Prueba con otro nombre.</p></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head-row"><h2><a href={`${W}/oposiciones/policia-local/convocatorias-policia-local/`}>Últimas convocatorias para Policía Local en Aragón.</a></h2>
+      <div class="arrows"><button type="button" id="prev" aria-label="Anterior" disabled>‹</button><button type="button" id="next" aria-label="Siguiente">›</button></div></div>
+    <div class="rail" id="rail" tabindex="0" aria-label="Convocatorias">{convs.map(p => (
+      <article class="post">{p.image && <a href={p.link} tabindex="-1" aria-hidden="true"><img src={p.image} alt="" loading="lazy" decoding="async" /></a>}
+        <time>{p.date}</time><h3><a href={p.link}>{p.title}</a></h3><p>{p.excerpt}</p></article>))}</div>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap">
+    <h2><a href={`${W}/blog/`}>Conoce los artículos de nuestro blog para opositores.</a></h2>
+    <div class="news">{posts.map((p, i) => (
+      <article class={'post' + (i === 0 ? ' feat' : '')}>{p.image && <a href={p.link} tabindex="-1" aria-hidden="true"><img src={p.image} alt="" loading="lazy" decoding="async" /></a>}
+        <time>{p.date}</time><h3><a href={p.link}>{p.title}</a></h3><p>{p.excerpt}</p></article>))}</div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <p><a href={`${W}/aviso-legal/`}>Aviso Legal</a><a href={`${W}/politica-de-privacidad-isfes/`}>Política de Privacidad</a><a href={`${W}/politica-de-cookies/`}>Política de Cookies</a><a href={`${W}/politica-de-ventas/`}>Política de Ventas</a></p>
+  <p><a href="mailto:info@isfes.es">info@isfes.es</a><a href="https://facebook.com/isfeses/">Facebook</a><a href="https://www.instagram.com/isfes.es/">Instagram</a><a href="https://twitter.com/isfeses">X</a></p>
+  <p class="legal">Instituto Social y Formativo de las Emergencias y de la Seguridad 2026 ©</p>
+</div></footer>
+
+<script>
+  const $ = <T extends HTMLElement>(s: string, r: ParentNode = document) => r.querySelector(s) as T;
+  const $$ = <T extends HTMLElement>(s: string, r: ParentNode = document) => [...r.querySelectorAll(s)] as T[];
+
+  // 1. YouTube Facade: Solo inserta el iframe al hacer click (Ahorra bloqueo de JS y ~1.5s TBT)
+  $$('.yt-facade').forEach(el => {
+    const btn = el.querySelector('button');
+    const startVideo = () => {
+      const id = el.dataset.id;
+      const title = el.dataset.title || 'Vídeo';
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+      iframe.title = title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = el.classList.contains('short') ? 'short' : '';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.borderRadius = 'inherit';
+      iframe.style.border = '0';
+      el.replaceWith(iframe);
+    };
+    btn?.addEventListener('click', startVideo, { once: true });
+    el.addEventListener('click', (e) => { if (e.target !== btn) startVideo(); }, { once: true });
+  });
+
+  // 2. Menú Drawer Móvil
+  const toggle = $('#nav-toggle'), drawer = $('#mobile-drawer'), backdrop = $('#drawer-backdrop'), closeBtn = $('#drawer-close');
+  const openDrawer = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    drawer?.classList.toggle('open', open);
+    drawer?.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  toggle?.addEventListener('click', () => openDrawer(true));
+  closeBtn?.addEventListener('click', () => openDrawer(false));
+  backdrop?.addEventListener('click', () => openDrawer(false));
+  $$('.drawer-nav a').forEach(a => a.addEventListener('click', () => openDrawer(false)));
+
+  // 3. Scroll y Spy
+  const gnav = $('#gnav'), snav = $('#snav'), hero = $('.hero');
+  const onScroll = () => {
+    gnav.classList.toggle('edge', scrollY > 4);
+    snav.classList.toggle('on', hero.getBoundingClientRect().bottom < 120);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const links = $$('[data-spy]');
+  const spy = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(l => l.classList.toggle('cur', l.dataset.spy === e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  links.forEach(l => { const s = document.getElementById(l.dataset.spy!); s && spy.observe(s); });
+
+  // 4. Estadísticas y animaciones
+  const tabs = $('.tabs'), btns = $$('[data-t]', tabs), thumb = $('.thumb', tabs), panels = $$('.tp', tabs);
+  const moveThumb = (b: HTMLElement) => { thumb.style.width = b.offsetWidth + 'px'; thumb.style.transform = `translateX(${b.offsetLeft}px)`; };
+  const show = (b: HTMLElement) => {
+    btns.forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    moveThumb(b);
+    panels.forEach(p => { p.hidden = p.dataset.p !== b.dataset.t; p.classList.remove('go'); });
+    const p = panels.find(p => !p.hidden)!; void p.offsetWidth; p.classList.add('go');
+  };
+  btns.forEach(b => b.addEventListener('click', () => show(b)));
+  const cur = btns[btns.length - 1];
+  if (cur) {
+    moveThumb(cur);
+    addEventListener('resize', () => moveThumb(btns.find(b => b.getAttribute('aria-selected') === 'true')!));
+    new IntersectionObserver((es, o) => es.forEach(e => e.isIntersecting && (show(cur), o.disconnect())), { threshold: .4 }).observe(tabs);
+  }
+
+  // 5. Quiz interactivo
+  const quiz = $('#quiz'), opts = $$<HTMLButtonElement>('.opts button', quiz), res = $('#q-res');
+  opts.forEach(o => o.addEventListener('click', () => {
+    const ok = o.dataset.ok === '1';
+    quiz.classList.add('done'); opts.forEach(x => { x.disabled = true; if (x.dataset.ok === '1') x.classList.add('ok'); });
+    if (!ok) o.classList.add('ko');
+    res.textContent = ok ? 'Correcto. Artículo 17.2 de la Constitución: setenta y dos horas como máximo.' : 'No es esa. Según el artículo 17.2 de la Constitución, el máximo son setenta y dos horas.';
+  }));
+  $('#q-again')?.addEventListener('click', () => { quiz.classList.remove('done'); opts.forEach(x => { x.disabled = false; x.className = ''; }); res.textContent = ''; });
+
+  // 6. Filtro tabla municipios
+  const rows = $$('#rows tr'), empty = $('#empty');
+  $<HTMLInputElement>('#find')?.addEventListener('input', e => {
+    const q = (e.target as HTMLInputElement).value.trim().toLowerCase(); let n = 0;
+    rows.forEach(r => { const hit = r.cells[0].textContent!.toLowerCase().includes(q); r.hidden = !hit; if (hit) n++; });
+    if (empty) empty.hidden = n > 0;
+  });
+
+  // 7. Carrusel
+  const rail = $('#rail'), prev = $<HTMLButtonElement>('#prev'), next = $<HTMLButtonElement>('#next');
+  if (rail && prev && next) {
+    const upd = () => { prev.disabled = rail.scrollLeft < 4; next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4; };
+    const step = () => (rail.firstElementChild as HTMLElement)?.offsetWidth + 20 || 300;
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+    rail.addEventListener('scroll', upd, { passive: true }); upd();
+  }
+  // Carga diferida del widget de Elfsight (Google Reviews) al hacer scroll
+const wrapper = document.getElementById('elfsight-wrapper');
+const skeleton = document.getElementById('widget-skeleton');
+
+if (wrapper) {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        obs.disconnect(); // Solo se carga una vez
+        
+        const s = document.createElement('script');
+        s.src = 'https://static.elfsight.com/platform/platform.js';
+        s.async = true;
+        s.onload = () => {
+          // Oculta el skeleton en cuanto el widget toma el control
+          setTimeout(() => {
+            if (skeleton) skeleton.style.display = 'none';
+          }, 500);
+        };
+        document.body.appendChild(s);
+      }
+    });
+  }, { rootMargin: '300px 0px' }); // Comienza a cargarlo 300px antes de llegar a la vista
+
+  observer.observe(wrapper);
+}
+</script>
+</body></html>
+
+<style is:global>
+/* Contenedor del Widget de Elfsight */
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.elfsight-container {
+  min-height: 280px;
+  position: relative;
+  border-radius: var(--r-xl);
+}
+.widget-skeleton {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: #ffffff;
+  border-radius: var(--r-l);
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  color: var(--mute);
+  font-size: .95rem;
+}
+.skeleton-pulse {
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--tile);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+:root{--paper:#fbfbfd;--tile:#f2f2f4;--ink:#1d1d1f;--mute:#6e6e73;--blue:#1d3fbf;--blue-d:#16298a;--red:#d92d20;--green:#12935a;--line:#d9d9de;
+  --ease:cubic-bezier(.32,.72,0,1);--r-xl:32px;--r-l:22px;--r-m:14px;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.47 -apple-system,BlinkMacSystemFont,'SF Pro Text','Instrument Sans','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;font-variant-numeric:tabular-nums}
+::selection{background:#c9d4ff}img{max-width:100%;height:auto}a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:99;background:#fff;padding:.5rem 1rem;border-radius:8px}
+h1,h2,h3,h4{margin:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Instrument Sans','Helvetica Neue',Arial,sans-serif;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7.4vw,5.6rem);line-height:1.02;letter-spacing:-.045em;font-weight:700}
+h2{font-size:clamp(2rem,4.6vw,3.5rem);line-height:1.07;letter-spacing:-.035em;font-weight:700;max-width:22ch}
+h1 span,h2 span{color:var(--mute)}h2 a{text-decoration:none}h2 a:hover{text-decoration:underline;text-underline-offset:.12em;text-decoration-thickness:2px}
+h3{font-size:1.5rem;line-height:1.2;letter-spacing:-.02em;font-weight:600}
+p{text-wrap:pretty}
+
+/* Barras de Navegación */
+.gnav{position:sticky;top:0;z-index:40;height:48px;background:rgba(251,251,253,.85);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:box-shadow .3s}
+.gnav.edge{box-shadow:0 .5px 0 rgba(0,0,0,.15)}
+.gnav-in{max-width:1080px;margin:0 auto;height:100%;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.brand img{height:30px;width:auto;display:block}
+.gnav-desk{display:flex;align-items:center;gap:1.7rem}
+.gnav-desk a{font-size:.78rem;text-decoration:none;color:rgba(29,29,31,.8);transition:color .2s}
+.gnav-desk a:hover{color:#000}
+.gnav-desk .gnav-aula{font-weight:600;color:var(--blue)}
+.gnav-actions{display:none;align-items:center;gap:.6rem}
+.gnav-mob-aula{font-size:.75rem!important;padding:0 .75rem!important;min-height:28px!important}
+
+/* Botón Hamburguesa */
+.nav-toggle{display:flex;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:0;cursor:pointer;padding:4px}
+.nav-toggle .bar{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s var(--ease),opacity .2s}
+
+/* Drawer Móvil */
+.drawer{position:fixed;inset:0;z-index:50;visibility:hidden;pointer-events:none;transition:visibility 0s .3s}
+.drawer.open{visibility:visible;pointer-events:auto;transition:visibility 0s}
+.drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;backdrop-filter:blur(4px);transition:opacity .3s ease}
+.drawer.open .drawer-backdrop{opacity:1}
+.drawer-content{position:absolute;right:0;top:0;bottom:0;width:min(320px,85vw);background:#fff;padding:1.5rem;box-shadow:-4px 0 24px rgba(0,0,0,.12);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s var(--ease)}
+.drawer.open .drawer-content{transform:none}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.drawer-t{font-weight:700;font-size:1.1rem}
+.drawer-close{width:32px;height:32px;background:var(--tile);border:0;border-radius:50%;font-size:1rem;cursor:pointer;display:grid;place-items:center}
+.drawer-nav{display:flex;flex-direction:column;gap:.25rem;margin:1.5rem 0;overflow-y:auto}
+.drawer-nav a{padding:.75rem .5rem;text-decoration:none;font-size:1.05rem;font-weight:500;color:var(--ink);border-radius:8px;transition:background .15s}
+.drawer-nav a:hover{background:var(--tile)}
+.drawer-nav .drawer-highlight{color:var(--blue);font-weight:600}
+.drawer-footer{margin-top:auto;padding-top:1rem;border-top:1px solid var(--line)}
+
+/* Barra de Sección Flotante */
+.snav{position:fixed;left:0;right:0;top:48px;z-index:39;height:52px;background:rgba(251,251,253,.88);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 .5px 0 rgba(0,0,0,.15);transform:translateY(-100%);opacity:0;visibility:hidden;transition:transform .45s var(--ease),opacity .3s,visibility 0s .45s}
+.snav.on{transform:none;opacity:1;visibility:visible;transition:transform .45s var(--ease),opacity .3s,visibility 0s}
+.snav-in{max-width:1080px;margin:0 auto;height:100%;padding:0 1.25rem;display:flex;align-items:center;gap:1.5rem}
+.snav-t{font-weight:600;font-size:1.05rem;letter-spacing:-.02em;margin-right:auto;white-space:nowrap}
+.snav-l{display:flex;gap:1.3rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.snav-l a{font-size:.78rem;text-decoration:none;color:var(--mute);position:relative;padding:.9rem 0;white-space:nowrap;transition:color .2s}
+.snav-l a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.snav-l a:hover{color:var(--ink)}.snav-l a.cur{color:var(--ink)}.snav-l a.cur::after{transform:scaleX(1)}
+
+/* Botones y Enlaces */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1.35rem;border-radius:980px;background:var(--blue);color:#fff;text-decoration:none;font-size:1rem;font-weight:500;transition:background .2s,transform .15s var(--ease)}
+.btn:hover{background:#2a4fd6}.btn:active{transform:scale(.97)}.btn svg{width:18px;height:18px;margin-right:.55rem;flex:none}.tgi{width:76px;height:76px;margin-bottom:1.2rem}.btn.sm{min-height:30px;padding:0 .95rem;font-size:.8rem}
+.tl{color:var(--blue);text-decoration:none;font-weight:500;background:none;border:0;padding:0;font:inherit;font-weight:500;cursor:pointer}
+.tl::after{content:'›';display:inline-block;margin-left:.3em;transition:transform .25s var(--ease)}.tl:hover{text-decoration:underline;text-underline-offset:.2em}.tl:hover::after{transform:translateX(3px)}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem 1.6rem;margin:1.6rem 0 0}
+
+/* Hero */
+.hero{max-width:1080px;margin:0 auto;padding:clamp(2.5rem,6vw,4.5rem) 1.25rem 0;text-align:center}
+.hero h1{max-width:16ch;margin:1.3rem auto 0}
+.hero .cta-row{justify-content:center;margin-top:1.8rem}
+.live{display:inline-flex;align-items:center;gap:.55rem;font-size:.9rem;text-decoration:none;color:var(--ink);background:var(--tile);padding:.45rem .95rem;border-radius:980px;transition:background .2s}.live:hover{background:#e8e8ec}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 2.4s ease-out 1.2s 3}.live b{color:var(--mute);font-weight:500;transition:transform .25s var(--ease)}.live:hover b{transform:translateX(3px)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,45,32,.5)}70%,100%{box-shadow:0 0 0 8px rgba(217,45,32,0)}}
+.photo{position:relative;margin:clamp(2.5rem,6vw,4rem) 0 0;aspect-ratio:21/9;border-radius:var(--r-xl);overflow:hidden;background:var(--blue-d)}
+.photo>img:first-child{width:100%;height:100%;object-fit:cover;display:block}.photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,60,.45),rgba(10,20,60,0) 40%,rgba(10,20,60,.5))}
+.plogo{position:absolute;z-index:1;left:clamp(1rem,3vw,2.2rem);top:clamp(1rem,3vw,2rem);width:clamp(110px,18vw,200px);height:auto}
+.photo figcaption{position:absolute;z-index:1;left:clamp(.8rem,2vw,1.5rem);right:clamp(.8rem,2vw,1.5rem);bottom:clamp(.8rem,2vw,1.5rem);max-width:30rem;text-align:left;font-size:clamp(.9rem,1.5vw,1.1rem);font-weight:500;color:#fff;padding:.9rem 1.2rem;border-radius:var(--r-m);background:rgba(20,28,60,.38);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.rise{opacity:0;transform:translateY(18px);animation:rise .9s var(--ease) var(--d,0s) forwards}@keyframes rise{to{opacity:1;transform:none}}
+
+/* Secciones Generales */
+.sec{padding:clamp(4.5rem,10vw,8rem) 0;scroll-margin-top:100px}.tint{background:var(--tile)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}.narrow{max-width:860px}
+.statement{font-size:clamp(1.8rem,4.4vw,3.2rem);line-height:1.12;letter-spacing:-.035em;font-weight:700;max-width:26ch;margin:0 0 2.5rem;text-wrap:balance}.statement span{color:var(--mute)}
+.body-l{font-size:1.2rem;line-height:1.5;color:var(--mute)}.body-l b{color:var(--ink);font-weight:600}.cols2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 3rem}.cols2 p{margin:0}
+.flags{display:flex;justify-content:center;gap:clamp(1rem,3vw,2rem);margin:clamp(2.5rem,6vw,4rem) 0 0}.flags img{height:clamp(70px,11vw,120px);width:auto;border-radius:10px;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.lede{font-size:1.3rem;margin:1.5rem 0 0}.note{font-size:.9rem;color:var(--mute)}
+
+/* ¿Por qué elegir ISFES? */
+.why{list-style:none;padding:0;margin:3rem 0 0;display:grid;grid-template-columns:1fr 1fr;gap:0 3rem}
+.why li{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 0;border-top:1px solid var(--line)}
+.why img{flex:none;filter:grayscale(1);opacity:.6;transition:filter .3s,opacity .3s}.why li:hover img{filter:none;opacity:1}
+
+/* Bento Grid */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tile{border-radius:var(--r-xl);padding:clamp(1.6rem,4vw,3rem);display:flex;flex-direction:column;align-items:flex-start}
+.tile h3{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.03em;max-width:14ch}.tile>p{color:var(--mute);margin:.9rem 0 0}.tile b{color:var(--ink);font-weight:600}
+.zoom,.test{background:var(--tile)}
+.tg-in{display:grid;grid-template-columns:1fr 170px;gap:1.5rem;align-items:end;width:100%;margin-top:1rem}.tg-in p{margin-top:0}
+
+/* YouTube Facade (Optimización de Rendimiento) */
+.yt-facade{position:relative;background:#000;border-radius:var(--r-l);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.yt-facade img{width:100%;height:100%;object-fit:cover;opacity:.88;transition:opacity .25s,transform .35s var(--ease)}
+.yt-facade:hover img{opacity:1;transform:scale(1.02)}
+.yt-btn{position:absolute;z-index:2;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);border:0;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer;transition:transform .2s var(--ease),background .2s}
+.yt-facade:hover .yt-btn{transform:scale(1.08);background:#fff}
+.yt-facade.short{aspect-ratio:9/16;width:100%;max-width:170px}
+.yt-facade.short .yt-btn{width:46px;height:46px}
+
+/* Quiz Test */
+.qtile{grid-column:1/-1;display:grid;grid-template-columns:1fr 1.1fr;gap:2.5rem;align-items:center}.qtile .quiz{margin-top:0}.qtile>div:first-child p{color:var(--mute);margin:.9rem 0 0}
+.quiz{width:100%;margin-top:1.8rem;background:#fff;border-radius:var(--r-l);padding:1.4rem;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.q-meta{margin:0;font-size:.8rem;color:var(--mute)}.q{margin:.3rem 0 1rem;font-size:1.25rem;font-weight:600;letter-spacing:-.015em;line-height:1.25}
+.opts{display:grid;gap:.5rem}.opts button{display:flex;align-items:center;gap:.8rem;width:100%;min-height:48px;padding:.5rem .9rem;text-align:left;font:inherit;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);cursor:pointer;transition:border-color .2s,background .25s,transform .15s var(--ease),opacity .3s}
+.opts button i{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tile);font-style:normal;font-size:.8rem;font-weight:600;transition:background .25s,color .25s}
+.opts button:not(:disabled):hover{border-color:var(--ink)}.opts button:not(:disabled):active{transform:scale(.985)}
+.opts button:disabled{cursor:default;opacity:.5}.opts button.ok{opacity:1;border-color:var(--green);background:#eaf7f0}.opts button.ok i{background:var(--green);color:#fff}
+.opts button.ko{opacity:1;border-color:var(--red);background:#fdeeed;animation:nope .4s var(--ease)}.opts button.ko i{background:var(--red);color:#fff}
+@keyframes nope{20%{transform:translateX(-4px)}60%{transform:translateX(4px)}}
+.why-q{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}.why-q>div{overflow:hidden}.quiz.done .why-q{grid-template-rows:1fr}
+.why-q p{margin:1rem 0 .4rem;font-size:.95rem}
+
+/* Reseñas Certificadas Google */
+.reviews-header{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
+.google-badge{display:inline-flex;align-items:center;gap:.9rem;background:#fff;padding:.6rem 1.1rem;border-radius:980px;margin-top:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.g-icon{width:28px;height:28px;flex:none}
+.g-score{display:flex;align-items:center;gap:.5rem;font-size:.85rem}
+.g-score b{font-size:1rem;color:var(--ink)}
+.stars{color:#f59e0b;letter-spacing:2px;font-size:.95rem}
+.g-score span{color:var(--mute);border-left:1px solid var(--line);padding-left:.5rem}
+
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem}
+.rev-card{background:#fff;border-radius:var(--r-l);padding:1.6rem;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.04);transition:transform .2s var(--ease)}
+.rev-card:hover{transform:translateY(-3px)}
+.rev-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.rev-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem;flex:none}
+.rev-meta{margin-right:auto}
+.rev-meta h4{font-size:1rem;font-weight:600}
+.rev-meta p{margin:0;font-size:.78rem;color:var(--mute)}
+.rev-stars{color:#f59e0b;font-size:.85rem;letter-spacing:1px}
+.rev-text{margin:0 0 1.2rem;font-size:.95rem;line-height:1.5;color:#2c2c2e;flex-grow:1}
+.rev-verify{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--green);font-weight:500;padding-top:.8rem;border-top:1px solid #f2f2f5}
+
+/* Ficha Técnica */
+.specs{margin:3rem 0 0}.specs>div{display:grid;grid-template-columns:230px 1fr;gap:1rem;padding:1.3rem 0;border-top:1px solid var(--line)}.specs>div:last-child{border-bottom:1px solid var(--line)}
+.specs dt{font-weight:600}.specs dd{margin:0;color:var(--mute)}.specs dd b{color:var(--ink)}
+
+/* Estadísticas */
+.seg{position:relative;display:inline-flex;margin:2.2rem 0 2.5rem;padding:3px;border-radius:980px;background:#e4e4e9;max-width:100%;overflow-x:auto}
+.seg button{position:relative;z-index:1;min-height:36px;padding:0 1.25rem;border:0;background:none;font:inherit;font-size:.95rem;font-weight:500;color:var(--mute);cursor:pointer;border-radius:980px;transition:color .25s}.seg button[aria-selected=true]{color:var(--ink)}
+.thumb{position:absolute;left:0;top:3px;bottom:3px;border-radius:980px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.04);transition:transform .45s var(--ease),width .45s var(--ease)}
+.tp[hidden]{display:none}.stat{padding:1.6rem 0;border-top:1px solid var(--line)}.stat p{margin:0 0 1.1rem;font-size:clamp(1.3rem,2.8vw,1.9rem);line-height:1.25;letter-spacing:-.02em;font-weight:500;max-width:34ch}.stat b{font-weight:700}
+.meter{height:6px;border-radius:3px;background:#dcdce1;overflow:hidden}.meter span{display:block;height:100%;background:var(--green);border-radius:3px;transform-origin:left;transform:scaleX(0);transition:transform 1.1s var(--ease) .1s}.tp.go .meter span{transform:scaleX(var(--v))}
+
+/* Tarifas */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.plan{background:var(--tile);border-radius:var(--r-xl);padding:2rem 1.8rem 1.8rem;display:flex;flex-direction:column;gap:.4rem}
+.plan h3{font-size:1.15rem;letter-spacing:-.01em;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}.plan h3 em{font-style:normal;font-size:.75rem;font-weight:500;background:#fff;color:var(--blue-d);padding:.15rem .6rem;border-radius:980px}
+.price{margin:1rem 0 .2rem;font-size:clamp(2.8rem,5vw,3.8rem);line-height:1;font-weight:700;letter-spacing:-.045em}.price small{font-size:1rem;font-weight:500;letter-spacing:0;opacity:.6;margin-left:.2rem}
+.pl{margin:0 0 1.4rem;color:var(--mute);min-height:3em}.plan .tl{margin-top:auto}
+.plan.rec{background:var(--blue-d);color:#fff}.plan.rec .pl{color:rgba(255,255,255,.75)}.plan.rec .tl{color:#fff}
+.incl-t{font-size:1.3rem;margin:4rem 0 1rem}.incl{list-style:none;padding:0;margin:0;columns:2;column-gap:3rem}
+.incl li{break-inside:avoid;padding:.7rem 0 .7rem 1.7rem;border-top:1px solid var(--line);position:relative;font-size:.95rem}
+.incl li::before{content:'';position:absolute;left:.15rem;top:1.05rem;width:6px;height:11px;border:solid var(--green);border-width:0 2px 2px 0;transform:rotate(40deg)}
+
+/* Contacto */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
+.ways{list-style:none;padding:0;margin:0}.ways li{border-top:1px solid var(--line)}.ways li:last-child{border-bottom:1px solid var(--line)}
+.ways a{display:flex;align-items:center;gap:1rem;padding:1.2rem 0;text-decoration:none;min-height:44px}.ways a span{display:block;color:var(--mute);font-size:.95rem}.ways b{display:block;color:var(--ink);font-size:1.15rem;font-weight:600;letter-spacing:-.01em;transition:color .2s}
+.ways a:hover b{color:var(--blue)}.dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--blue)}.dot.g{background:var(--green)}
+.map{width:100%;height:260px;border:0;border-radius:var(--r-l)}.where{font-size:1.15rem;margin:1.4rem 0 .3rem}
+
+/* Acordeón */
+.acc{margin-top:3rem}.acc details{border-top:1px solid var(--line)}.acc details:last-child{border-bottom:1px solid var(--line)}
+.acc summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:64px;font-size:1.3rem;font-weight:600;letter-spacing:-.015em;cursor:pointer;list-style:none}.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:'';flex:none;width:14px;height:14px;background:linear-gradient(var(--ink),var(--ink)) center/100% 1.5px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.5px 100% no-repeat;transition:transform .4s var(--ease)}
+.acc details[open] summary::after{transform:rotate(135deg)}
+.acc-b{padding:0 0 1.6rem;color:var(--mute)}.acc-b b{color:var(--ink)}.acc-b ul{padding-left:1.1rem;margin:0 0 1rem}.acc-b li{margin:.45rem 0}.acc-b p{margin:0 0 1rem}
+
+/* Tabla + Filtro */
+.find{display:block;margin:2.2rem 0 1rem;max-width:340px}.find span{display:block;font-size:.8rem;color:var(--mute);margin-bottom:.35rem}
+.find input{width:100%;height:44px;padding:0 1rem;font:inherit;border:1px solid var(--line);border-radius:var(--r-m);background:#fff;transition:border-color .2s,box-shadow .2s}.find input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(29,63,191,.15)}
+.tbl{max-height:480px;overflow:auto;background:#fff;border-radius:var(--r-l);padding:0 1.4rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}th{position:sticky;top:0;background:#fff;text-align:left;font-size:.8rem;font-weight:500;color:var(--mute);padding:1rem .5rem;border-bottom:1px solid var(--line)}
+td{padding:.95rem .5rem;border-bottom:1px solid #ececf0}tbody tr{transition:background .15s}tbody tr:hover{background:#f7f7fa}tr:last-child td{border-bottom:0}tr[hidden]{display:none}.empty{padding:1.5rem .5rem;margin:0;color:var(--mute)}
+
+/* Entradas y Carrusel */
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}.arrows{display:flex;gap:.5rem;flex:none}
+.arrows button{width:44px;height:44px;border-radius:50%;border:0;background:var(--tile);font-size:1.5rem;line-height:1;color:var(--ink);cursor:pointer;transition:background .2s,opacity .2s,transform .15s var(--ease)}.arrows button:hover:not(:disabled){background:#e4e4e9}.arrows button:active:not(:disabled){transform:scale(.92)}.arrows button:disabled{opacity:.35;cursor:default}
+.rail{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:3rem;padding-bottom:.5rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}.rail::-webkit-scrollbar{display:none}.rail .post{flex:0 0 min(280px,74%);scroll-snap-align:start}.rail .post img{aspect-ratio:1/1}
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem 1.5rem;margin-top:3rem}.news .feat{grid-column:span 2}
+.post img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:var(--r-l);background:#e4e4e9}.post.feat img{aspect-ratio:16/9;border-radius:var(--r-xl)}
+.post time{display:block;margin:1rem 0 .3rem;font-size:.8rem;color:var(--mute)}.post h3{font-size:1.2rem;letter-spacing:-.015em}.feat h3{font-size:1.8rem;letter-spacing:-.025em}
+.post h3 a{text-decoration:none}.post h3 a:hover{text-decoration:underline;text-underline-offset:.15em}
+.post p{margin:.5rem 0 0;color:var(--mute);font-size:.95rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+footer{background:var(--tile);color:var(--mute);font-size:.75rem;padding:1.6rem 0 2.4rem;border-top:1px solid var(--line)}footer p{margin:.6rem 0;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}footer a{text-decoration:none}footer a:hover{text-decoration:underline;color:var(--ink)}.legal{padding-top:.8rem;border-top:1px solid var(--line)}
+
+/* Media Queries */
+@media(max-width:900px){
+  .qtile{grid-template-columns:1fr;gap:1.5rem}
+  .plans{grid-template-columns:1fr}
+  .news{grid-template-columns:1fr 1fr}
+  .bento,.contact{grid-template-columns:1fr}
+  .photo{aspect-ratio:4/3}
+}
+@media(max-width:760px){
+  .gnav-desk{display:none}
+  .gnav-actions{display:flex}
+  .tg-in{grid-template-columns:1fr}
+  .short{max-width:200px}
+  .why,.cols2{grid-template-columns:1fr}
+  .incl{columns:1}
+  .specs>div{grid-template-columns:1fr;gap:.3rem}
+  .snav-t{display:none}
+  .snav-in{gap:.8rem}
+  .news{grid-template-columns:1fr}
+  .news .feat{grid-column:auto}
+  .head-row{align-items:flex-start}
+  .reviews-header{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .rise{opacity:1;transform:none}
+}
+</style>
